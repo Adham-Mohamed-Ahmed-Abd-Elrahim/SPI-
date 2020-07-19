@@ -1,0 +1,297 @@
+
+SPI.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000178  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000006  00800060  00000178  000001ec  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001f2  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000224  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000058  00000000  00000000  00000260  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000073d  00000000  00000000  000002b8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000061a  00000000  00000000  000009f5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000365  00000000  00000000  0000100f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000088  00000000  00000000  00001374  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000033b  00000000  00000000  000013fc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000af  00000000  00000000  00001737  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000038  00000000  00000000  000017e6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e8 e7       	ldi	r30, 0x78	; 120
+  68:	f1 e0       	ldi	r31, 0x01	; 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a6 36       	cpi	r26, 0x66	; 102
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 41 00 	call	0x82	; 0x82 <main>
+  7a:	0c 94 ba 00 	jmp	0x174	; 0x174 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <main>:
+#include "SPI.h"
+
+#define mode MASTER
+
+int main(void)
+{  
+  82:	cf 93       	push	r28
+  84:	df 93       	push	r29
+  86:	00 d0       	rcall	.+0      	; 0x88 <main+0x6>
+  88:	00 d0       	rcall	.+0      	; 0x8a <main+0x8>
+  8a:	00 d0       	rcall	.+0      	; 0x8c <main+0xa>
+  8c:	cd b7       	in	r28, 0x3d	; 61
+  8e:	de b7       	in	r29, 0x3e	; 62
+SPI_SET(MSB,PRE_16,MODE1,NORMAL);
+  90:	20 e0       	ldi	r18, 0x00	; 0
+  92:	40 e0       	ldi	r20, 0x00	; 0
+  94:	62 e0       	ldi	r22, 0x02	; 2
+  96:	80 e0       	ldi	r24, 0x00	; 0
+  98:	0e 94 69 00 	call	0xd2	; 0xd2 <SPI_SET>
+	SPI_INI();
+  9c:	0e 94 b2 00 	call	0x164	; 0x164 <SPI_INI>
+
+	
+ char recieve[6]="adham";
+  a0:	86 e0       	ldi	r24, 0x06	; 6
+  a2:	e0 e6       	ldi	r30, 0x60	; 96
+  a4:	f0 e0       	ldi	r31, 0x00	; 0
+  a6:	de 01       	movw	r26, r28
+  a8:	11 96       	adiw	r26, 0x01	; 1
+  aa:	01 90       	ld	r0, Z+
+  ac:	0d 92       	st	X+, r0
+  ae:	8a 95       	dec	r24
+  b0:	e1 f7       	brne	.-8      	; 0xaa <main+0x28>
+  b2:	7e 01       	movw	r14, r28
+  b4:	87 e0       	ldi	r24, 0x07	; 7
+  b6:	e8 0e       	add	r14, r24
+  b8:	f1 1c       	adc	r15, r1
+  ba:	8e 01       	movw	r16, r28
+  bc:	0f 5f       	subi	r16, 0xFF	; 255
+  be:	1f 4f       	sbci	r17, 0xFF	; 255
+
+    /* Replace with your application code */
+    while (1) 
+    {//recieve=USART_RECIVE();
+for(uint8_t i=0;i<6;i++)
+   {     SPI_WRITE(recieve[i]);}
+  c0:	f8 01       	movw	r30, r16
+  c2:	81 91       	ld	r24, Z+
+  c4:	8f 01       	movw	r16, r30
+  c6:	0e 94 ad 00 	call	0x15a	; 0x15a <SPI_WRITE>
+ char recieve[6]="adham";
+
+    /* Replace with your application code */
+    while (1) 
+    {//recieve=USART_RECIVE();
+for(uint8_t i=0;i<6;i++)
+  ca:	0e 15       	cp	r16, r14
+  cc:	1f 05       	cpc	r17, r15
+  ce:	c1 f7       	brne	.-16     	; 0xc0 <main+0x3e>
+  d0:	f4 cf       	rjmp	.-24     	; 0xba <main+0x38>
+
+000000d2 <SPI_SET>:
+ *  Author: ADHM
+ */ 
+#include "SPI.h"
+void SPI_SET(uint8_t ORDER,uint8_t speed,uint8_t POLARITY_MODE,uint8_t mode)
+{
+	switch(mode)
+  d2:	22 23       	and	r18, r18
+  d4:	19 f0       	breq	.+6      	; 0xdc <SPI_SET+0xa>
+  d6:	21 30       	cpi	r18, 0x01	; 1
+  d8:	19 f0       	breq	.+6      	; 0xe0 <SPI_SET+0xe>
+  da:	04 c0       	rjmp	.+8      	; 0xe4 <SPI_SET+0x12>
+	{case NORMAL:	
+		CLR_BIT(SPSR,SPI2X);break;
+  dc:	70 98       	cbi	0x0e, 0	; 14
+  de:	03 c0       	rjmp	.+6      	; 0xe6 <SPI_SET+0x14>
+	case DOUBLE :   
+	SET_BIT(SPSR,SPI2X);break;
+  e0:	70 9a       	sbi	0x0e, 0	; 14
+  e2:	01 c0       	rjmp	.+2      	; 0xe6 <SPI_SET+0x14>
+	default :       
+	CLR_BIT(SPSR,SPI2X);break;
+  e4:	70 98       	cbi	0x0e, 0	; 14
+		
+	}
+
+		switch (speed)
+  e6:	62 30       	cpi	r22, 0x02	; 2
+  e8:	61 f0       	breq	.+24     	; 0x102 <SPI_SET+0x30>
+  ea:	18 f4       	brcc	.+6      	; 0xf2 <SPI_SET+0x20>
+  ec:	61 30       	cpi	r22, 0x01	; 1
+  ee:	31 f0       	breq	.+12     	; 0xfc <SPI_SET+0x2a>
+  f0:	11 c0       	rjmp	.+34     	; 0x114 <SPI_SET+0x42>
+  f2:	63 30       	cpi	r22, 0x03	; 3
+  f4:	49 f0       	breq	.+18     	; 0x108 <SPI_SET+0x36>
+  f6:	64 30       	cpi	r22, 0x04	; 4
+  f8:	51 f0       	breq	.+20     	; 0x10e <SPI_SET+0x3c>
+  fa:	0c c0       	rjmp	.+24     	; 0x114 <SPI_SET+0x42>
+		{   case PRE_4:
+			{CLR_BIT(SPCR,SPR0);CLR_BIT(SPCR,SPR1);break;}
+  fc:	68 98       	cbi	0x0d, 0	; 13
+  fe:	69 98       	cbi	0x0d, 1	; 13
+ 100:	0b c0       	rjmp	.+22     	; 0x118 <SPI_SET+0x46>
+			case PRE_16:
+			 {SET_BIT(SPCR,SPR0);CLR_BIT(SPCR,SPR1);break;}
+ 102:	68 9a       	sbi	0x0d, 0	; 13
+ 104:	69 98       	cbi	0x0d, 1	; 13
+ 106:	08 c0       	rjmp	.+16     	; 0x118 <SPI_SET+0x46>
+				 
+			case PRE_64:
+			{CLR_BIT(SPCR,SPR0);SET_BIT(SPCR,SPR1);break;}
+ 108:	68 98       	cbi	0x0d, 0	; 13
+ 10a:	69 9a       	sbi	0x0d, 1	; 13
+ 10c:	05 c0       	rjmp	.+10     	; 0x118 <SPI_SET+0x46>
+			case PRE_128:
+			{SET_BIT(SPCR,SPR0);SET_BIT(SPCR,SPR1);break;}
+ 10e:	68 9a       	sbi	0x0d, 0	; 13
+ 110:	69 9a       	sbi	0x0d, 1	; 13
+ 112:	02 c0       	rjmp	.+4      	; 0x118 <SPI_SET+0x46>
+			//default : prescale /16
+			default	:SET_BIT(SPCR,SPR0);CLR_BIT(SPCR,SPR1);break;
+ 114:	68 9a       	sbi	0x0d, 0	; 13
+ 116:	69 98       	cbi	0x0d, 1	; 13
+			}
+		
+
+	switch (ORDER)
+ 118:	88 23       	and	r24, r24
+ 11a:	19 f0       	breq	.+6      	; 0x122 <SPI_SET+0x50>
+ 11c:	81 30       	cpi	r24, 0x01	; 1
+ 11e:	19 f0       	breq	.+6      	; 0x126 <SPI_SET+0x54>
+ 120:	04 c0       	rjmp	.+8      	; 0x12a <SPI_SET+0x58>
+	{case MSB :CLR_BIT(SPCR,DORD);break;
+ 122:	6d 98       	cbi	0x0d, 5	; 13
+ 124:	03 c0       	rjmp	.+6      	; 0x12c <SPI_SET+0x5a>
+		case LSB :SET_BIT(SPCR,DORD);break;
+ 126:	6d 9a       	sbi	0x0d, 5	; 13
+ 128:	01 c0       	rjmp	.+2      	; 0x12c <SPI_SET+0x5a>
+		//default oder of transfere from most significant bit
+		default:CLR_BIT(SPCR,DORD);break;
+ 12a:	6d 98       	cbi	0x0d, 5	; 13
+	}
+	
+	switch(POLARITY_MODE)
+ 12c:	41 30       	cpi	r20, 0x01	; 1
+ 12e:	49 f0       	breq	.+18     	; 0x142 <SPI_SET+0x70>
+ 130:	28 f0       	brcs	.+10     	; 0x13c <SPI_SET+0x6a>
+ 132:	42 30       	cpi	r20, 0x02	; 2
+ 134:	49 f0       	breq	.+18     	; 0x148 <SPI_SET+0x76>
+ 136:	43 30       	cpi	r20, 0x03	; 3
+ 138:	51 f0       	breq	.+20     	; 0x14e <SPI_SET+0x7c>
+ 13a:	0c c0       	rjmp	.+24     	; 0x154 <SPI_SET+0x82>
+	{   case MODE1: CLR_BIT(SPCR,CPOL);CLR_BIT(SPCR,CPHA);break;
+ 13c:	6b 98       	cbi	0x0d, 3	; 13
+ 13e:	6a 98       	cbi	0x0d, 2	; 13
+ 140:	08 95       	ret
+		case MODE2: CLR_BIT(SPCR,CPOL);SET_BIT(SPCR,CPHA);break;
+ 142:	6b 98       	cbi	0x0d, 3	; 13
+ 144:	6a 9a       	sbi	0x0d, 2	; 13
+ 146:	08 95       	ret
+		case MODE3: SET_BIT(SPCR,CPOL);CLR_BIT(SPCR,CPHA);break;
+ 148:	6b 9a       	sbi	0x0d, 3	; 13
+ 14a:	6a 98       	cbi	0x0d, 2	; 13
+ 14c:	08 95       	ret
+		case MODE4: SET_BIT(SPCR,CPOL);SET_BIT(SPCR,CPHA);break;
+ 14e:	6b 9a       	sbi	0x0d, 3	; 13
+ 150:	6a 9a       	sbi	0x0d, 2	; 13
+ 152:	08 95       	ret
+		//MODE1
+		default :CLR_BIT(SPCR,CPOL);CLR_BIT(SPCR,CPHA);break;
+ 154:	6b 98       	cbi	0x0d, 3	; 13
+ 156:	6a 98       	cbi	0x0d, 2	; 13
+ 158:	08 95       	ret
+
+0000015a <SPI_WRITE>:
+	
+	
+
+void SPI_WRITE(char DATA)
+{	char flush_buffer;
+	SPDR = DATA;			/* Write data to SPI data register */
+ 15a:	8f b9       	out	0x0f, r24	; 15
+	while(!(READ_BIT(SPSR,SPIF)));	/* Wait till transmission complete */
+ 15c:	77 9b       	sbis	0x0e, 7	; 14
+ 15e:	fe cf       	rjmp	.-4      	; 0x15c <SPI_WRITE+0x2>
+	flush_buffer = SPDR;
+ 160:	8f b1       	in	r24, 0x0f	; 15
+ 162:	08 95       	ret
+
+00000164 <SPI_INI>:
+}
+#define MODE 
+#ifdef MASTER
+void SPI_INI()
+{   //Making MOSI-CS-CLSK As output /MISO AS INPUT
+	CLR_BIT(DDRB,MISO); 	SET_BIT(DDRB,MOSI); 	SET_BIT(DDRB,SS); SET_BIT(DDRB,SCK);
+ 164:	be 98       	cbi	0x17, 6	; 23
+ 166:	bd 9a       	sbi	0x17, 5	; 23
+ 168:	bc 9a       	sbi	0x17, 4	; 23
+ 16a:	bf 9a       	sbi	0x17, 7	; 23
+	//DDRB|=0b00001101;
+	SET_BIT(PORTB,SS);
+ 16c:	c4 9a       	sbi	0x18, 4	; 24
+	//Enabling SPI
+	SET_BIT(SPCR,SPE);SET_BIT(SPCR,MSTR);
+ 16e:	6e 9a       	sbi	0x0d, 6	; 13
+ 170:	6c 9a       	sbi	0x0d, 4	; 13
+ 172:	08 95       	ret
+
+00000174 <_exit>:
+ 174:	f8 94       	cli
+
+00000176 <__stop_program>:
+ 176:	ff cf       	rjmp	.-2      	; 0x176 <__stop_program>
